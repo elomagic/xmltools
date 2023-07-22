@@ -14,6 +14,10 @@ This project is a Java library to ease up the handling of XML files.
 
 * Supports Java 17 or higher
 
+### Limitations
+
+* XML mixed content not supported
+
 ## Using the library
 
 ### Maven
