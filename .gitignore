@@ -1,0 +1,10 @@
+/target/
+/pom.xml.releaseBackup
+/nbproject/
+/xsd-model.iml
+/.idea/dbnavigator.xml
+/.idea/jarRepositories.xml
+/.idea/sonarlint/
+/.idea/workspace.xml
+/.idea/compiler.xml
+/excluded/
