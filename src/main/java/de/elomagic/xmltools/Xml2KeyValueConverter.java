@@ -5,7 +5,6 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -25,39 +24,100 @@ public class Xml2KeyValueConverter {
     private boolean attributeSupport = true;
     private String attributeDelimiter = "#";
 
+    /**
+     * Returns delimiters string
+     * <p>
+     * Default "." (Dot)
+     *
+     * @return Returns a string.
+     */
     @NotNull
     public String getKeyDelimiter() {
         return keyDelimiter;
     }
 
+    /**
+     * Set key word delimiter.
+     * <p>
+     * Default "." (Dot)
+     *
+     * @param keyDelimiter A string
+     */
     public void setKeyDelimiter(@NotNull String keyDelimiter) {
         this.keyDelimiter = keyDelimiter;
     }
 
+    /**
+     * Returns support of converting XML attributes.
+     * <p>
+     * Default true
+     *
+     * @return When true, XML attributes will also be converted otherwise not
+     */
     public boolean isAttributeSupport() {
         return attributeSupport;
     }
 
+    /**
+     * Set converting support of XML attributes
+     * <p>
+     * Default true;
+     *
+     * @param attributeSupport When true, XML attributes will also be converted otherwise not
+     */
     public void setAttributeSupport(boolean attributeSupport) {
         this.attributeSupport = attributeSupport;
     }
 
+
+    /**
+     * Returns delimiters for attributes.
+     * <p>
+     * Default "#" (Hashtag)
+     *
+     * @return Returns a string.
+     */
     @NotNull
     public String getAttributeDelimiter() {
         return attributeDelimiter;
     }
 
+    /**
+     * Set delimiter for the attribute name.
+     * <p>
+     * Default "#" (Hashtag)
+     *
+     * @param attributeDelimiter A string
+     */
     public void setAttributeDelimiter(@NotNull String attributeDelimiter) {
         this.attributeDelimiter = attributeDelimiter;
     }
 
+    /**
+     * Reads an XML document from a file and converts it into a key value {@link Map}.
+     *
+     * @param file File to read
+     * @return Returns a map but never null
+     * @throws ParserConfigurationException Thrown when unable to parse the XML document
+     * @throws IOException Thrown when unable to read XML document from the input stream
+     * @throws SAXException Thrown when unable to parse the XML document
+     */
     @NotNull
-    public Map<String, String> read(@NotNull Path file ) throws ParserConfigurationException, IOException, SAXException {
+    public Map<String, String> read(@NotNull Path file) throws ParserConfigurationException, IOException, SAXException {
 
         return read(Files.newInputStream(file));
 
     }
 
+    /**
+     * Reads an XML document from an {@link InputStream} and converts it into a key value {@link Map}.
+     *
+     * @param in Input stream where to read the XML document
+     * @return Returns a map but never null
+     * @throws ParserConfigurationException Thrown when unable to parse the XML document
+     * @throws IOException Thrown when unable to read XML document from the input stream
+     * @throws SAXException Thrown when unable to parse the XML document
+     */
     @NotNull
     public Map<String, String> read(@NotNull InputStream in) throws ParserConfigurationException, IOException, SAXException {
 
@@ -67,10 +127,11 @@ public class Xml2KeyValueConverter {
         Document doc = db.parse(in);
         //doc.getDocumentElement().normalize();
 
-        return parseNodeChilds(doc.getDocumentElement().getNodeName(), doc.getDocumentElement());
+        return parseElementChilds(doc.getDocumentElement().getNodeName(), doc.getDocumentElement());
     }
 
-    private Map<String, String> parseNodeChilds(@NotNull String chainKey, @NotNull Element element) {
+    @NotNull
+    private Map<String, String> parseElementChilds(@NotNull String chainKey, @NotNull Element element) {
 
         Map<String, String> result = new HashMap<>();
 
@@ -91,11 +152,9 @@ public class Xml2KeyValueConverter {
             String name = child.getNodeName();
 
             if (type == Node.TEXT_NODE) {
-                Text text = (Text)child;
-                textContent = text.getTextContent();
+                textContent = child.getTextContent();
             } else if (type == Node.ELEMENT_NODE) {
-                Element e = (Element)child;
-                result.putAll(parseNodeChilds(String.join(keyDelimiter, chainKey, name), e));
+                result.putAll(parseElementChilds(String.join(keyDelimiter, chainKey, name), (Element)child));
                 skipTextNode = true;
             }
         }
