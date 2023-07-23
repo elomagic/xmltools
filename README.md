@@ -14,9 +14,10 @@ This project is a Java library to ease up the handling of XML files.
 
 * Supports Java 17 or higher
 
-### Limitations
+### Current limitations
 
 * XML mixed content not supported
+* Element name repetitions
 
 ## Using the library
 
@@ -36,7 +37,7 @@ version in your project.
         <dependency>
             <groupId>de.elomagic</groupId>
             <artifactId>xmltools</artifactId>
-            <version>[3,]</version>
+            <version>[1,]</version>
         </dependency>
     </dependencies>
     
