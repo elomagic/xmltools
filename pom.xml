@@ -5,7 +5,7 @@
 
     <groupId>de.elomagic</groupId>
     <artifactId>xmltools</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>XML Tools</name>
@@ -99,7 +99,7 @@
         <url>https://github.com/elomagic/xmltools</url>
         <connection>scm:git:https://elomagic@github.com/elomagic/xmltools.git</connection>
         <developerConnection>scm:git:https://elomagic@github.com/elomagic/xmltools.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.0.3-SNAPSHOT</tag>
     </scm>
     
     <build>
