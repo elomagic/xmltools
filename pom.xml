@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.elomagic</groupId>
-    <artifactId>xml-tools</artifactId>
+    <artifactId>xmltools</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>XML Tools (Java 17 with Jakarta XML Binding 4.0)</name>
-    <url>https://github.com/elomagic/xml-tools</url>
+    <url>https://github.com/elomagic/xmltools</url>
 
     <inceptionYear>2023</inceptionYear>
 
@@ -31,7 +31,7 @@
     
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/elomagic/xml-tools/issues</url>
+        <url>https://github.com/elomagic/xmltools/issues</url>
     </issueManagement> 
     
     <licenses>
@@ -95,9 +95,9 @@
     </properties>
     
     <scm>                
-        <url>https://github.com/elomagic/xml-tools</url>
-        <connection>scm:git:https://elomagic@github.com/elomagic/xml-tools.git</connection>
-        <developerConnection>scm:git:https://elomagic@github.com/elomagic/xml-tools.git</developerConnection>
+        <url>https://github.com/elomagic/xmltools</url>
+        <connection>scm:git:https://elomagic@github.com/elomagic/xmltools.git</connection>
+        <developerConnection>scm:git:https://elomagic@github.com/elomagic/xmltools.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     
@@ -320,7 +320,7 @@
         <snapshotRepository>
             <id>github</id>
             <name>GitHub elomagic Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/elomagic/xml-toolsl</url>
+            <url>https://maven.pkg.github.com/elomagic/xmltoolsl</url>
         </snapshotRepository>
     </distributionManagement>
     
