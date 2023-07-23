@@ -1,14 +1,14 @@
-# xml-tools - Tooling for managing XML
+# xmltools - Tooling for managing XML
 
 ---
 
-[![build workflow](https://github.com/elomagic/xml-tools/actions/workflows/maven.yml/badge.svg)](https://github.com/elomagic/xml-tools/actions)
-[![GitHub issues](https://img.shields.io/github/issues-raw/elomagic/xml-tools)](https://github.com/elomagic/xml-tools/issues)
-[![GitHub tag](https://img.shields.io/github/tag/elomagic/xml-tools.svg)](https://GitHub.com/elomagic/xml-tools/tags/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/elomagic/xml-tools/graphs/commit-activity)
+[![build workflow](https://github.com/elomagic/xmltools/actions/workflows/maven.yml/badge.svg)](https://github.com/elomagic/xmltools/actions)
+[![GitHub issues](https://img.shields.io/github/issues-raw/elomagic/xmltools)](https://github.com/elomagic/xmltools/issues)
+[![GitHub tag](https://img.shields.io/github/tag/elomagic/xmltools.svg)](https://GitHub.com/elomagic/xmltools/tags/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/elomagic/xmltools/graphs/commit-activity)
 [![Buymeacoffee](https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&label)](https://www.buymeacoffee.com/elomagic)
 
-## What is this xml-tools ? ###
+## What is this xmltools ? ###
 
 This project is a Java library to ease up the handling of XML files.
 
@@ -35,7 +35,7 @@ version in your project.
     <dependencies>
         <dependency>
             <groupId>de.elomagic</groupId>
-            <artifactId>xml-tools</artifactId>
+            <artifactId>xmltools</artifactId>
             <version>[3,]</version>
         </dependency>
     </dependencies>
@@ -65,9 +65,9 @@ Versioning follows the semantic of [Semantic Versioning 2.0.0](https://semver.or
 
 Execute following steps:
 
-* Are the [CHANGELOG.md](https://github.com/elomagic/xml-tools/blob/main/CHANGELOG.md) up to date?
-* Check the version in the ```pom.xml``` and [CHANGELOG.md](https://github.com/elomagic/xml-tools/blob/main/CHANGELOG.md)
-* Set release date in the [CHANGELOG.md](https://github.com/elomagic/xml-tools/blob/main/CHANGELOG.md)
+* Are the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md) up to date?
+* Check the version in the ```pom.xml``` and [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
+* Set release date in the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
 * Credentials (Nexus, GitHub) up to date?
 * Execute Maven release process
   ```bash
@@ -90,4 +90,4 @@ mvn clean install deploy
 
 ## License
 
-The xsd-model is distributed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+The xsdtools is distributed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
