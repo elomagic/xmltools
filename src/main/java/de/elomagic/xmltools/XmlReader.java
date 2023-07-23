@@ -1,5 +1,5 @@
 /*
- * XML Tools (Java 17 with Jakarta XML Binding 4.0)
+ * XML Tools
  * Copyright (c) 2023-present Carsten Rambow
  * mailto:developer AT elomagic DOT de
  *
