@@ -17,7 +17,6 @@ This project is a Java library to ease up the handling of XML files.
 ### Current limitations
 
 * XML mixed content not supported
-* Element name repetitions
 
 ## Using the library
 
