@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Xml2KeyValueConverter {
 
@@ -40,6 +41,9 @@ public class Xml2KeyValueConverter {
 
     private boolean attributeSupport = true;
     private String attributeDelimiter = "#";
+
+    private int repetitionStart = 1;
+    private String repetitionPattern = "[%s]";
 
     /**
      * Returns delimiters string
@@ -110,6 +114,22 @@ public class Xml2KeyValueConverter {
         this.attributeDelimiter = attributeDelimiter;
     }
 
+    public int getRepetitionStart() {
+        return repetitionStart;
+    }
+
+    public void setRepetitionStart(int repetitionStart) {
+        this.repetitionStart = repetitionStart;
+    }
+
+    public String getRepetitionPattern() {
+        return repetitionPattern;
+    }
+
+    public void setRepetitionPattern(@NotNull String repetitionPattern) {
+        this.repetitionPattern = repetitionPattern;
+    }
+
     /**
      * Reads an XML document from a file and converts it into a key value {@link Map}.
      *
@@ -144,20 +164,22 @@ public class Xml2KeyValueConverter {
         Document doc = db.parse(in);
         //doc.getDocumentElement().normalize();
 
-        return parseElementChilds(doc.getDocumentElement().getNodeName(), doc.getDocumentElement());
+        return parseElementChilds(doc.getDocumentElement());
     }
 
     @NotNull
-    private Map<String, String> parseElementChilds(@NotNull String chainKey, @NotNull Element element) {
+    private Map<String, String> parseElementChilds(@NotNull Element element) {
 
         Map<String, String> result = new HashMap<>();
 
         if (attributeSupport) {
             for (int i = 0; i < element.getAttributes().getLength(); i++) {
                 Attr attr = (Attr) element.getAttributes().item(i);
-                result.put(String.join(attributeDelimiter, chainKey, attr.getName()), attr.getValue());
+                result.put(String.join(attributeDelimiter, element.getNodeName(), attr.getName()), attr.getValue());
             }
         }
+
+        Map<String, Map<String, String>> groupedKeys = new HashMap<>();
 
         boolean skipTextNode = false;
         String textContent = "";
@@ -171,14 +193,34 @@ public class Xml2KeyValueConverter {
             if (type == Node.TEXT_NODE) {
                 textContent = child.getTextContent();
             } else if (type == Node.ELEMENT_NODE) {
-                result.putAll(parseElementChilds(String.join(keyDelimiter, chainKey, name), (Element)child));
+                Map<String, String> m = groupedKeys.getOrDefault(name, new HashMap<>());
+
+                m.putAll(parseElementChilds((Element)child));
                 skipTextNode = true;
+
+                groupedKeys.put(name, m);
             }
         }
 
-        if (!skipTextNode) {
-            result.put(chainKey, textContent);
-        }
+        groupedKeys.forEach((k, m) -> {
+            if (m.size() == 1) {
+                result.putAll(m);
+            } else {
+                AtomicInteger i = new AtomicInteger(repetitionStart);
+                m.forEach((k2, v) -> result.put(String.format(repetitionPattern, i.getAndIncrement()), v));
+            }
+        });
+
+        return skipTextNode ?
+                paddingKey(result, element.getNodeName())
+                : Map.of(element.getNodeName(), textContent);
+    }
+
+    @NotNull
+    private Map<String, String> paddingKey(@NotNull Map<String, String> map, @NotNull String paddingKey) {
+        Map<String, String> result = new HashMap<>();
+
+        map.forEach((k, v) -> result.put(String.join(keyDelimiter, paddingKey, k), v));
 
         return result;
     }
