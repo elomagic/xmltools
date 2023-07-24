@@ -217,7 +217,7 @@ public class Xml2KeyValueConverter {
     }
 
     @NotNull
-    private Map<String, String> paddingKey(@NotNull Map<String, String> map, @NotNull String paddingKey) {
+    Map<String, String> paddingKey(@NotNull Map<String, String> map, @NotNull String paddingKey) {
         Map<String, String> result = new HashMap<>();
 
         map.forEach((k, v) -> result.put(String.join(keyDelimiter, paddingKey, k), v));
