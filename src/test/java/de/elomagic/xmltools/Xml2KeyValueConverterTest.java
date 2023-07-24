@@ -20,8 +20,8 @@ class Xml2KeyValueConverterTest {
         result.keySet().stream().sorted().forEach(k -> System.out.println(k + "=" + result.get(k)));
 
         assertEquals(18, result.size());
-        assertEquals("1", result.get("root.child2.subelement[1]"));
-        assertEquals("2", result.get("root.child2.subelement[2]"));
+        assertEquals("1", result.get("root.child1.subelement[1]"));
+        assertEquals("2", result.get("root.child1.subelement[2]"));
         assertEquals("false", result.get("root.child5.activate"));
         assertEquals("30", result.get("root.child[1].checkInterval[2]"));
 
@@ -29,5 +29,14 @@ class Xml2KeyValueConverterTest {
         Map<String, String> result2 = converter.read(getClass().getResourceAsStream("/sample01.xml"));
         assertEquals(15, result2.size());
         assertFalse(result.containsKey("abc"));
+    }
+
+    @Test
+    void testPaddingKey() {
+
+        Xml2KeyValueConverter converter = new Xml2KeyValueConverter();
+
+        assertEquals("value", converter.paddingKey(Map.of("b.c", "value"), "a").get("a.b.c"));
+
     }
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root xmlns:x0="http://www.w3.org/2001/XMLSchema">
-    <child1 attr1="abc" attr2="xyz">
-        <active>true</active>
-        <checkInterval>30</checkInterval>
-        <subelement>1</subelement>
-    </child1>
-    <child2>
+    <child1>
         <subelement>1</subelement>
         <subelement>2</subelement>
         <checkInterval>30</checkInterval>
+    </child1>
+    <child2 attr1="abc" attr2="xyz">
+        <active>true</active>
+        <checkInterval>30</checkInterval>
+        <subelement>1</subelement>
     </child2>
     <child3>
         <active>false</active>
