@@ -6,7 +6,8 @@
         <subelement>1</subelement>
     </child1>
     <child2>
-        <active>false</active>
+        <subelement>1</subelement>
+        <subelement>2</subelement>
         <checkInterval>30</checkInterval>
     </child2>
     <child3>
@@ -22,4 +23,11 @@
         <checkInterval>30</checkInterval>
         <ackFolder/>
     </child5>
+    <childn>
+        <checkInterval>30</checkInterval>
+        <checkInterval>30</checkInterval>
+    </childn>
+    <childn>
+        <ackFolder>/</ackFolder>
+    </childn>
 </root>

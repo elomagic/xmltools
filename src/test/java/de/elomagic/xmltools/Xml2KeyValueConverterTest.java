@@ -19,12 +19,15 @@ class Xml2KeyValueConverterTest {
 
         result.keySet().stream().sorted().forEach(k -> System.out.println(k + "=" + result.get(k)));
 
-        assertEquals(15, result.size());
-        assertEquals("abc", result.get("root.child1#attr1"));
+        assertEquals(18, result.size());
+        assertEquals("1", result.get("root.child2.subelement[1]"));
+        assertEquals("2", result.get("root.child2.subelement[2]"));
+        assertEquals("false", result.get("root.child5.activate"));
+        assertEquals("30", result.get("root.child[1].checkInterval[2]"));
 
         converter.setAttributeSupport(false);
         Map<String, String> result2 = converter.read(getClass().getResourceAsStream("/sample01.xml"));
-        assertEquals(12, result2.size());
+        assertEquals(15, result2.size());
         assertFalse(result.containsKey("abc"));
     }
 }
