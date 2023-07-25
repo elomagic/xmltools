@@ -31,9 +31,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class Xml2KeyValueConverter {
 
@@ -167,12 +171,28 @@ public class Xml2KeyValueConverter {
         return parseElementChilds(doc.getDocumentElement());
     }
 
-    boolean hasElementChilds(@NotNull Element element) {
-        return false;
+    Stream<Element> streamElementChilds(@NotNull Element element) {
+
+        List<Element> childElements = new ArrayList<>();
+
+        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
+            Node child = element.getChildNodes().item(i);
+
+            if (child.getNodeType() == Node.ELEMENT_NODE) {
+                childElements.add((Element)child);
+            }
+        }
+
+        return childElements.isEmpty() ? Stream.empty() : childElements.stream();
+
+    }
+
+    boolean hasElementsChilds(@NotNull Element element) {
+        return streamElementChilds(element).findFirst().isPresent();
     }
 
     @NotNull
-    private Map<String, String> parseElementChilds(@NotNull Element element) {
+    Map<String, String> parseElementChilds(@NotNull Element element) {
 
         Map<String, String> result = new HashMap<>();
 
@@ -183,60 +203,54 @@ public class Xml2KeyValueConverter {
             }
         }
 
-        Map<String, Integer> groupedKeys = new HashMap<>();
-        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
-            Node child = element.getChildNodes().item(i);
-
-            short type = child.getNodeType();
-            String name = child.getNodeName();
-
-            if (type == Node.ELEMENT_NODE) {
-                int count = groupedKeys.getOrDefault(name, 0);
-                count++;
-                groupedKeys.put(name, count);
+        Map<String, List<String>> groupedTextChilds = new HashMap<>();
+        // Detect multiple text elements
+        streamElementChilds(element)
+                .filter(e -> !hasElementsChilds(e))
+                .forEach(e -> {
+                    List<String> list = groupedTextChilds.getOrDefault(e.getNodeName(), new ArrayList<>());
+                    list.add(e.getTextContent());
+                    groupedTextChilds.put(e.getNodeName(), list);
+                });
+        groupedTextChilds.forEach((k, m) -> {
+            if (m.size() == 1) {
+                result.put(k, m.get(0));
+            } else {
+                AtomicInteger i = new AtomicInteger(repetitionStart);
+                m.forEach(v -> result.put(paddingKey(element.getNodeName(), k + String.format(repetitionPattern, i.getAndIncrement())), v));
             }
-        }
+        });
 
+        // Detect multiple child element elements
+        Map<String, Map<String, String>> groupedElementChilds = new HashMap<>();
+        streamElementChilds(element)
+                .filter(e -> hasElementsChilds(e))
+                .forEach(e -> {
+                    Map<String, String> m = groupedElementChilds.getOrDefault(e.getNodeName(), new HashMap<>());
 
-        boolean skipTextNode = false;
-        String textContent = "";
+                    m.putAll(paddingKeys(parseElementChilds(e), element.getNodeName()));
 
-        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
-            Node child = element.getChildNodes().item(i);
-
-            short type = child.getNodeType();
-            String name = child.getNodeName();
-
-            if (type == Node.TEXT_NODE) {
-                textContent = child.getTextContent();
-            } else if (type == Node.ELEMENT_NODE) {
-                //Map<String, String> m = groupedKeys.getOrDefault(name, new HashMap<>());
-
-                //m.putAll(parseElementChilds((Element)child));
-                skipTextNode = true;
-
-                //groupedKeys.put(name, m);
-            }
-        }
-
-        /*
-        groupedKeys.forEach((k, m) -> {
+                    groupedElementChilds.put(e.getNodeName(), m);
+                });
+        groupedElementChilds.forEach((k, m) -> {
             if (m.size() == 1) {
                 result.putAll(m);
             } else {
                 AtomicInteger i = new AtomicInteger(repetitionStart);
-                m.forEach((k2, v) -> result.put(String.format(repetitionPattern, i.getAndIncrement()), v));
+                m.forEach((k2, v) -> result.put(k2 + String.format(repetitionPattern, i.getAndIncrement()), v));
             }
         });
-        */
 
-        return skipTextNode ?
-                paddingKey(result, element.getNodeName())
-                : Map.of(element.getNodeName(), textContent);
+        return result;
     }
 
     @NotNull
-    Map<String, String> paddingKey(@NotNull Map<String, String> map, @NotNull String paddingKey) {
+    String paddingKey(@NotNull String paddingKey, @NotNull String key) {
+        return String.join(keyDelimiter, paddingKey, key);
+    }
+
+    @NotNull
+    Map<String, String> paddingKeys(@NotNull Map<String, String> map, @NotNull String paddingKey) {
         Map<String, String> result = new HashMap<>();
 
         map.forEach((k, v) -> result.put(String.join(keyDelimiter, paddingKey, k), v));

@@ -4,6 +4,7 @@
         <subelement>1</subelement>
         <subelement>2</subelement>
         <checkInterval>30</checkInterval>
+        <empty/>
     </child1>
     <child2 attr1="abc" attr2="xyz">
         <active>true</active>
@@ -30,4 +31,6 @@
     <childn>
         <ackFolder>/</ackFolder>
     </childn>
+    <childn>abc</childn>
+    <child/>
 </root>

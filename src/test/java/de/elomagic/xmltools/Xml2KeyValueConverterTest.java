@@ -13,7 +13,7 @@ class Xml2KeyValueConverterTest {
 
         Xml2KeyValueConverter converter = new Xml2KeyValueConverter();
 
-        Map<String, String> result = converter.read(getClass().getResourceAsStream("/sample02.xml"));
+        Map<String, String> result = converter.read(getClass().getResourceAsStream("/sample01.xml"));
 
         //result.forEach((key, value) -> System.out.println(key + "=" + value));
 
@@ -36,7 +36,7 @@ class Xml2KeyValueConverterTest {
 
         Xml2KeyValueConverter converter = new Xml2KeyValueConverter();
 
-        assertEquals("value", converter.paddingKey(Map.of("b.c", "value"), "a").get("a.b.c"));
+        assertEquals("value", converter.paddingKeys(Map.of("b.c", "value"), "a").get("a.b.c"));
 
     }
 }
