@@ -167,6 +167,10 @@ public class Xml2KeyValueConverter {
         return parseElementChilds(doc.getDocumentElement());
     }
 
+    boolean hasElementChilds(@NotNull Element element) {
+        return false;
+    }
+
     @NotNull
     private Map<String, String> parseElementChilds(@NotNull Element element) {
 
@@ -179,7 +183,20 @@ public class Xml2KeyValueConverter {
             }
         }
 
-        Map<String, Map<String, String>> groupedKeys = new HashMap<>();
+        Map<String, Integer> groupedKeys = new HashMap<>();
+        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
+            Node child = element.getChildNodes().item(i);
+
+            short type = child.getNodeType();
+            String name = child.getNodeName();
+
+            if (type == Node.ELEMENT_NODE) {
+                int count = groupedKeys.getOrDefault(name, 0);
+                count++;
+                groupedKeys.put(name, count);
+            }
+        }
+
 
         boolean skipTextNode = false;
         String textContent = "";
@@ -193,15 +210,16 @@ public class Xml2KeyValueConverter {
             if (type == Node.TEXT_NODE) {
                 textContent = child.getTextContent();
             } else if (type == Node.ELEMENT_NODE) {
-                Map<String, String> m = groupedKeys.getOrDefault(name, new HashMap<>());
+                //Map<String, String> m = groupedKeys.getOrDefault(name, new HashMap<>());
 
-                m.putAll(parseElementChilds((Element)child));
+                //m.putAll(parseElementChilds((Element)child));
                 skipTextNode = true;
 
-                groupedKeys.put(name, m);
+                //groupedKeys.put(name, m);
             }
         }
 
+        /*
         groupedKeys.forEach((k, m) -> {
             if (m.size() == 1) {
                 result.putAll(m);
@@ -210,6 +228,7 @@ public class Xml2KeyValueConverter {
                 m.forEach((k2, v) -> result.put(String.format(repetitionPattern, i.getAndIncrement()), v));
             }
         });
+        */
 
         return skipTextNode ?
                 paddingKey(result, element.getNodeName())
