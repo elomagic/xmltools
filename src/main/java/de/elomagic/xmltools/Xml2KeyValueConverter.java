@@ -214,7 +214,7 @@ public class Xml2KeyValueConverter {
                 });
         groupedTextChilds.forEach((k, m) -> {
             if (m.size() == 1) {
-                result.put(k, m.get(0));
+                result.put(paddingKey(element.getNodeName(), k), m.get(0));
             } else {
                 AtomicInteger i = new AtomicInteger(repetitionStart);
                 m.forEach(v -> result.put(paddingKey(element.getNodeName(), k + String.format(repetitionPattern, i.getAndIncrement())), v));
@@ -224,7 +224,7 @@ public class Xml2KeyValueConverter {
         // Detect multiple child element elements
         Map<String, Map<String, String>> groupedElementChilds = new HashMap<>();
         streamElementChilds(element)
-                .filter(e -> hasElementsChilds(e))
+                .filter(this::hasElementsChilds)
                 .forEach(e -> {
                     Map<String, String> m = groupedElementChilds.getOrDefault(e.getNodeName(), new HashMap<>());
 
