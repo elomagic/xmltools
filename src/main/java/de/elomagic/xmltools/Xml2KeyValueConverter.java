@@ -167,7 +167,7 @@ public class Xml2KeyValueConverter {
         Document doc = db.parse(in);
         //doc.getDocumentElement().normalize();
 
-        return parseElementChilds(doc.getDocumentElement());
+        return addKeyPrefix(doc.getDocumentElement().getNodeName(), parseElementChilds(doc.getDocumentElement()));
     }
 
     Stream<Element> streamElementChilds(@NotNull Element element) {
@@ -228,10 +228,9 @@ public class Xml2KeyValueConverter {
                 .filter(this::hasChildText)
                 .forEach(child -> {
                     String childName = child.getNodeName();
-                    String key = addKeyPrefix(element.getNodeName(),
-                            groupedChildKeys.get(childName) == 1
-                                    ? childName
-                                    : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement())));
+                    String key = groupedChildKeys.get(childName) == 1
+                            ? childName
+                            : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
 
                     result.put(key, child.getTextContent());
         });
@@ -241,14 +240,11 @@ public class Xml2KeyValueConverter {
                 .filter(this::hasElementsChilds)
                 .forEach(child -> {
                     String childName = child.getNodeName();
-                    String key = addKeyPrefix(element.getNodeName(),
-                            groupedChildKeys.getOrDefault(childName, repetitionStart) == 1
-                                    ? childName
-                                    : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement())));
+                    String key = groupedChildKeys.getOrDefault(childName, repetitionStart) == 1
+                            ? childName
+                            : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
 
-                    parseElementChilds(child).forEach((k, v) -> {
-                        result.put(addKeyPrefix(key, childName), v);
-                    });
+                    parseElementChilds(child).forEach((k, v) -> result.put(addKeyPrefix(key, k), v));
                 });
 
         return result;
