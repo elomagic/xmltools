@@ -167,7 +167,7 @@ public class Xml2KeyValueConverter {
         Document doc = db.parse(in);
         //doc.getDocumentElement().normalize();
 
-        return addKeyPrefix(doc.getDocumentElement().getNodeName(), parseChildElements(doc.getDocumentElement()));
+        return parseElementChilds(doc.getDocumentElement());
     }
 
     Stream<Element> streamElementChilds(@NotNull Element element) {
@@ -195,28 +195,28 @@ public class Xml2KeyValueConverter {
     }
 
     @NotNull
-    Map<String, String> parseChildElements(@NotNull Element parent) {
+    Map<String, String> parseElementChilds(@NotNull Element element) {
 
         Map<String, String> result = new HashMap<>();
 
-        // Map attributes the parent
+        // Map attributes the element
         if (attributeSupport) {
-            for (int i = 0; i < parent.getAttributes().getLength(); i++) {
-                Attr attr = (Attr) parent.getAttributes().item(i);
-                result.put(String.join(attributeDelimiter, parent.getNodeName(), attr.getName()), attr.getValue());
+            for (int i = 0; i < element.getAttributes().getLength(); i++) {
+                Attr attr = (Attr) element.getAttributes().item(i);
+                result.put(String.join(attributeDelimiter, element.getNodeName(), attr.getName()), attr.getValue());
             }
         }
 
         // Grouped multiple elements names
         Map<String, Integer> groupedChildKeys = new HashMap<>();
         Map<String, AtomicInteger> groupedChildIndexKeys = new HashMap<>();
-        streamElementChilds(parent)
+        streamElementChilds(element)
                 .filter(this::hasChildText)
                 .forEach(child -> {
                     groupedChildKeys.put(child.getNodeName(), groupedChildKeys.getOrDefault(child.getNodeName(), 0) + 1);
                     groupedChildIndexKeys.put(child.getNodeName(), new AtomicInteger(repetitionStart));
                 });
-        streamElementChilds(parent)
+        streamElementChilds(element)
                 .filter(this::hasElementsChilds)
                 .forEach(child -> {
                     groupedChildKeys.put(child.getNodeName(), groupedChildKeys.getOrDefault(child.getNodeName(), 0) + 1);
@@ -224,27 +224,31 @@ public class Xml2KeyValueConverter {
                 });
 
         // Map elements with text
-        streamElementChilds(parent)
+        streamElementChilds(element)
                 .filter(this::hasChildText)
                 .forEach(child -> {
                     String childName = child.getNodeName();
-                    String key = groupedChildKeys.get(childName) == 1
-                            ? childName
-                            : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
+                    String key = addKeyPrefix(element.getNodeName(),
+                            groupedChildKeys.get(childName) == 1
+                                    ? childName
+                                    : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement())));
 
                     result.put(key, child.getTextContent());
         });
 
         // Map elements with elements inside
-        streamElementChilds(parent)
+        streamElementChilds(element)
                 .filter(this::hasElementsChilds)
                 .forEach(child -> {
                     String childName = child.getNodeName();
-                    String key = groupedChildKeys.getOrDefault(childName, repetitionStart) == 1
-                            ? childName
-                            : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
+                    String key = addKeyPrefix(element.getNodeName(),
+                            groupedChildKeys.getOrDefault(childName, repetitionStart) == 1
+                                    ? childName
+                                    : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement())));
 
-                    parseChildElements(child).forEach((k, v) -> result.put(addKeyPrefix(key, k), v));
+                    parseElementChilds(child).forEach((k, v) -> {
+                        result.put(addKeyPrefix(key, childName), v);
+                    });
                 });
 
         return result;
@@ -259,7 +263,7 @@ public class Xml2KeyValueConverter {
     Map<String, String> addKeyPrefix(@NotNull String prefixKey, @NotNull Map<String, String> map) {
         Map<String, String> result = new HashMap<>();
 
-        map.forEach((k, v) -> result.put(addKeyPrefix(prefixKey, k), v));
+        map.forEach((k, v) -> result.put(String.join(keyDelimiter, prefixKey, k), v));
 
         return result;
     }
