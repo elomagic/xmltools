@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:x0="http://www.w3.org/2001/XMLSchema">
+    <child1>
+        <subelement>1</subelement>
+        <subelement>2</subelement>
+        <checkInterval>30</checkInterval>
+        <empty/>
+    </child1>
+    <child1>
+        <subelement>1</subelement>
+        <subelement>2</subelement>
+        <checkInterval>30</checkInterval>
+        <empty/>
+    </child1>
+</root>
