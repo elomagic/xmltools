@@ -33,7 +33,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -168,7 +167,7 @@ public class Xml2KeyValueConverter {
         Document doc = db.parse(in);
         //doc.getDocumentElement().normalize();
 
-        return parseElementChilds(doc.getDocumentElement());
+        return addKeyPrefix(doc.getDocumentElement().getNodeName(), parseChildElements(doc.getDocumentElement()));
     }
 
     Stream<Element> streamElementChilds(@NotNull Element element) {
@@ -188,72 +187,79 @@ public class Xml2KeyValueConverter {
     }
 
     boolean hasElementsChilds(@NotNull Element element) {
-        return streamElementChilds(element).findFirst().isPresent();
+        return streamElementChilds(element).findAny().isPresent();
+    }
+
+    boolean hasChildText(@NotNull Element element) {
+        return streamElementChilds(element).findFirst().isEmpty();
     }
 
     @NotNull
-    Map<String, String> parseElementChilds(@NotNull Element element) {
+    Map<String, String> parseChildElements(@NotNull Element parent) {
 
         Map<String, String> result = new HashMap<>();
 
+        // Map attributes the parent
         if (attributeSupport) {
-            for (int i = 0; i < element.getAttributes().getLength(); i++) {
-                Attr attr = (Attr) element.getAttributes().item(i);
-                result.put(String.join(attributeDelimiter, element.getNodeName(), attr.getName()), attr.getValue());
+            for (int i = 0; i < parent.getAttributes().getLength(); i++) {
+                Attr attr = (Attr) parent.getAttributes().item(i);
+                result.put(String.join(attributeDelimiter, parent.getNodeName(), attr.getName()), attr.getValue());
             }
         }
 
-        Map<String, List<String>> groupedTextChilds = new HashMap<>();
-        // Detect multiple text elements
-        streamElementChilds(element)
-                .filter(e -> !hasElementsChilds(e))
-                .forEach(e -> {
-                    List<String> list = groupedTextChilds.getOrDefault(e.getNodeName(), new ArrayList<>());
-                    list.add(e.getTextContent());
-                    groupedTextChilds.put(e.getNodeName(), list);
+        // Grouped multiple elements names
+        Map<String, Integer> groupedChildKeys = new HashMap<>();
+        Map<String, AtomicInteger> groupedChildIndexKeys = new HashMap<>();
+        streamElementChilds(parent)
+                .filter(this::hasChildText)
+                .forEach(child -> {
+                    groupedChildKeys.put(child.getNodeName(), groupedChildKeys.getOrDefault(child.getNodeName(), 0) + 1);
+                    groupedChildIndexKeys.put(child.getNodeName(), new AtomicInteger(repetitionStart));
                 });
-        groupedTextChilds.forEach((k, m) -> {
-            if (m.size() == 1) {
-                result.put(paddingKey(element.getNodeName(), k), m.get(0));
-            } else {
-                AtomicInteger i = new AtomicInteger(repetitionStart);
-                m.forEach(v -> result.put(paddingKey(element.getNodeName(), k + String.format(repetitionPattern, i.getAndIncrement())), v));
-            }
-        });
-
-        // Detect multiple child element elements
-        Map<String, Map<String, String>> groupedElementChilds = new HashMap<>();
-        streamElementChilds(element)
+        streamElementChilds(parent)
                 .filter(this::hasElementsChilds)
-                .forEach(e -> {
-                    Map<String, String> m = groupedElementChilds.getOrDefault(e.getNodeName(), new HashMap<>());
-
-                    m.putAll(paddingKeys(parseElementChilds(e), element.getNodeName()));
-
-                    groupedElementChilds.put(e.getNodeName(), m);
+                .forEach(child -> {
+                    groupedChildKeys.put(child.getNodeName(), groupedChildKeys.getOrDefault(child.getNodeName(), 0) + 1);
+                    groupedChildIndexKeys.put(child.getNodeName(), new AtomicInteger(repetitionStart));
                 });
-        groupedElementChilds.forEach((k, m) -> {
-            if (m.size() == 1) {
-                result.putAll(m);
-            } else {
-                AtomicInteger i = new AtomicInteger(repetitionStart);
-                m.forEach((k2, v) -> result.put(k2 + String.format(repetitionPattern, i.getAndIncrement()), v));
-            }
+
+        // Map elements with text
+        streamElementChilds(parent)
+                .filter(this::hasChildText)
+                .forEach(child -> {
+                    String childName = child.getNodeName();
+                    String key = groupedChildKeys.get(childName) == 1
+                            ? childName
+                            : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
+
+                    result.put(key, child.getTextContent());
         });
+
+        // Map elements with elements inside
+        streamElementChilds(parent)
+                .filter(this::hasElementsChilds)
+                .forEach(child -> {
+                    String childName = child.getNodeName();
+                    String key = groupedChildKeys.getOrDefault(childName, repetitionStart) == 1
+                            ? childName
+                            : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
+
+                    parseChildElements(child).forEach((k, v) -> result.put(addKeyPrefix(key, k), v));
+                });
 
         return result;
     }
 
     @NotNull
-    String paddingKey(@NotNull String paddingKey, @NotNull String key) {
-        return String.join(keyDelimiter, paddingKey, key);
+    String addKeyPrefix(@NotNull String prefixKey, @NotNull String key) {
+        return String.join(keyDelimiter, prefixKey, key);
     }
 
     @NotNull
-    Map<String, String> paddingKeys(@NotNull Map<String, String> map, @NotNull String paddingKey) {
+    Map<String, String> addKeyPrefix(@NotNull String prefixKey, @NotNull Map<String, String> map) {
         Map<String, String> result = new HashMap<>();
 
-        map.forEach((k, v) -> result.put(String.join(keyDelimiter, paddingKey, k), v));
+        map.forEach((k, v) -> result.put(addKeyPrefix(prefixKey, k), v));
 
         return result;
     }
