@@ -16,12 +16,12 @@ public class ElementTool {
     /**
      * Streams eny child element of type {@link Node#ELEMENT_NODE}.
      *
-     * @param parentElement Parent element
+     * @param parentElement Parent element node
      *
      * @return A stream but never null.
      */
     @NotNull
-    public static Stream<Element> streamChildElements(@NotNull Element parentElement) {
+    public static Stream<Element> streamChildElements(@NotNull Node parentElement) {
 
         List<Element> childElements = new ArrayList<>();
 
