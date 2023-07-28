@@ -1,6 +1,7 @@
 package de.elomagic.xmltools;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -71,6 +72,8 @@ public class KeyValue2XmlConverter {
 
         Node element = document;
 
+        boolean isAttr = false;
+
         for (String item : keyChain) {
             Matcher matcher = keyPattern.matcher(item);
 
@@ -88,14 +91,19 @@ public class KeyValue2XmlConverter {
                 }
 
                 if (attr != null) {
-                    // TODO element = ((Element)element).setAttributeNode(document.createAttribute(attr));
+                    Attr a = document.createAttribute(attr);
+                    a.setValue(value);
+                    ((Element)element).setAttributeNode(a);
+                    isAttr = true;
                 }
             } else {
                 throw new RuntimeException("Unsupported key value '" + key + "'.");
             }
         }
 
-        element.appendChild(document.createTextNode(value));
+        if (!isAttr) {
+            element.appendChild(document.createTextNode(value));
+        }
     }
 
     @NotNull
