@@ -21,10 +21,22 @@ public class KeyValue2XmlConverter {
     private Pattern keyPattern = Pattern.compile("^(?<name>[^#\\[\\]]+)(\\[(?<index>\\d+)])?(#(?<attr>.+))?$");
     private int repetitionStart = 1;
 
+    /**
+     * Returns the delimiter string, which will divide key into key items.
+     * <p>
+     * Default "."
+     *
+     * @return key item delimiter
+     */
     public String getKeyDelimiter() {
         return keyDelimiter;
     }
 
+    /**
+     * Set the delimiter string, which will divide key into key items.
+     *
+     * @param keyDelimiter key item delimiter
+     */
     public void setKeyDelimiter(@NotNull String keyDelimiter) {
         this.keyDelimiter = keyDelimiter;
     }
