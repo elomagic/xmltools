@@ -35,7 +35,7 @@ class KeyValue2XmlConverterTest {
 
         toString(document);
 
-        assertEquals("ddd", document.getDocumentElement().getNodeName());
+        assertEquals("root", document.getDocumentElement().getNodeName());
     }
 
     public static String toString(Document doc) {

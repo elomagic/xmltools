@@ -57,8 +57,11 @@ public class KeyValue2XmlConverter {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.newDocument();
 
-        // TODO Sort keys
-        keyValueMap.forEach((k, v) -> mapKeyValue(k, v, doc));
+        keyValueMap
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(e -> mapKeyValue(e.getKey(), e.getValue(), doc));
 
         return Optional.of(doc);
 
@@ -79,16 +82,15 @@ public class KeyValue2XmlConverter {
 
             if (matcher.find()) {
                 String name = matcher.group("name");
-                int index = Integer.valueOf(Objects.toString(matcher.group("index"), "0"));
+                int index = Integer.valueOf(Objects.toString(matcher.group("index"), Integer.toString(repetitionStart)));
                 // TODO Check. Attr can only be set on latest item
                 String attr = matcher.group("attr");
 
-                Optional<Element> oe = findAnyChild(element, name);
-                if (oe.isEmpty()) {
-                    element = element.appendChild(document.createElement(name));
-                } else {
-                    element = oe.get();
+                while (findChild(element, index-repetitionStart, name).isEmpty()) {
+                    element.appendChild(document.createElement(name));
                 }
+
+                element = findChild(element, index-repetitionStart, name).orElseThrow();
 
                 if (attr != null) {
                     Attr a = document.createAttribute(attr);
@@ -107,10 +109,11 @@ public class KeyValue2XmlConverter {
     }
 
     @NotNull
-    Optional<Element> findAnyChild(@NotNull Node parent, @NotNull String name) {
+    Optional<Element> findChild(@NotNull Node parent, int index, @NotNull String name) {
         return ElementTool
                 .streamChildElements(parent)
                 .filter(c -> c.getNodeName().equals(name))
+                .skip(index)
                 .findAny();
     }
 
