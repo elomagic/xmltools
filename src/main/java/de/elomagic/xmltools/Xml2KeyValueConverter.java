@@ -167,35 +167,19 @@ public class Xml2KeyValueConverter {
         Document doc = db.parse(in);
         //doc.getDocumentElement().normalize();
 
-        return addKeyPrefix(doc.getDocumentElement().getNodeName(), parseElementChilds(doc.getDocumentElement()));
+        return addKeyPrefix(doc.getDocumentElement().getNodeName(), parseChildElements(doc.getDocumentElement()));
     }
 
-    Stream<Element> streamElementChilds(@NotNull Element element) {
-
-        List<Element> childElements = new ArrayList<>();
-
-        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
-            Node child = element.getChildNodes().item(i);
-
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
-                childElements.add((Element)child);
-            }
-        }
-
-        return childElements.isEmpty() ? Stream.empty() : childElements.stream();
-
-    }
-
-    boolean hasElementsChilds(@NotNull Element element) {
-        return streamElementChilds(element).findAny().isPresent();
+    boolean hasChildElements(@NotNull Element element) {
+        return ElementTool.streamChildElements(element).findAny().isPresent();
     }
 
     boolean hasChildText(@NotNull Element element) {
-        return streamElementChilds(element).findFirst().isEmpty();
+        return ElementTool.streamChildElements(element).findFirst().isEmpty();
     }
 
     @NotNull
-    Map<String, String> parseElementChilds(@NotNull Element element) {
+    Map<String, String> parseChildElements(@NotNull Element element) {
 
         Map<String, String> result = new HashMap<>();
 
@@ -210,21 +194,21 @@ public class Xml2KeyValueConverter {
         // Grouped multiple elements names
         Map<String, Integer> groupedChildKeys = new HashMap<>();
         Map<String, AtomicInteger> groupedChildIndexKeys = new HashMap<>();
-        streamElementChilds(element)
+        ElementTool.streamChildElements(element)
                 .filter(this::hasChildText)
                 .forEach(child -> {
                     groupedChildKeys.put(child.getNodeName(), groupedChildKeys.getOrDefault(child.getNodeName(), 0) + 1);
                     groupedChildIndexKeys.put(child.getNodeName(), new AtomicInteger(repetitionStart));
                 });
-        streamElementChilds(element)
-                .filter(this::hasElementsChilds)
+        ElementTool.streamChildElements(element)
+                .filter(this::hasChildElements)
                 .forEach(child -> {
                     groupedChildKeys.put(child.getNodeName(), groupedChildKeys.getOrDefault(child.getNodeName(), 0) + 1);
                     groupedChildIndexKeys.put(child.getNodeName(), new AtomicInteger(repetitionStart));
                 });
 
         // Map elements with text
-        streamElementChilds(element)
+        ElementTool.streamChildElements(element)
                 .filter(this::hasChildText)
                 .forEach(child -> {
                     String childName = child.getNodeName();
@@ -236,15 +220,15 @@ public class Xml2KeyValueConverter {
         });
 
         // Map elements with elements inside
-        streamElementChilds(element)
-                .filter(this::hasElementsChilds)
+        ElementTool.streamChildElements(element)
+                .filter(this::hasChildElements)
                 .forEach(child -> {
                     String childName = child.getNodeName();
                     String key = groupedChildKeys.getOrDefault(childName, repetitionStart) == 1
                             ? childName
                             : (childName + String.format(repetitionPattern, groupedChildIndexKeys.get(childName).getAndIncrement()));
 
-                    parseElementChilds(child).forEach((k, v) -> result.put(addKeyPrefix(key, k), v));
+                    parseChildElements(child).forEach((k, v) -> result.put(addKeyPrefix(key, k), v));
                 });
 
         return result;
