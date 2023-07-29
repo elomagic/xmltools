@@ -45,6 +45,49 @@ version in your project.
 </project>
 ```
 
+## Using the API
+
+### Convert XML to key values
+
+```java
+import de.elomagic.xmltools.Xml2KeyValueConverter;
+
+import org.w3c.dom.Document;
+
+import java.nio.file.Paths;
+
+class Sample {
+
+  void example() throws Exception {
+    Xml2KeyValueConverter converter = new Xml2KeyValueConverter();
+    Map<String, String> map = converter.convert(Paths.get("document.xml"));
+  }
+
+}
+```
+
+### Convert key values to XML
+
+```java
+import de.elomagic.xmltools.KeyValue2XmlConverter;
+import org.w3c.dom.Document;
+import java.util.Map;
+
+class Sample {
+
+    void example() throws Exception {
+        Map<String, String> map = Map.of(
+            "de.elomagic.a", "1234",
+            "de.elomagic.b", "5678"
+        );
+
+        KeyValue2XmlConverter converter = new KeyValue2XmlConverter();
+        Document document = converter.convert(map);
+    }
+
+}
+```
+
 ## How to build artefact by myself?
 
 What you need is an installed JDK at least version 17 and [Apache Maven](https://maven.apache.org).

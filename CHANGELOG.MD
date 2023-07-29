@@ -10,6 +10,7 @@ to [Semantic Versioning](https://semver.org/).
 ### Added
 
 * Element name repetitions support
+* Key value to XML converter
 
 ## [1.0.3]
 
