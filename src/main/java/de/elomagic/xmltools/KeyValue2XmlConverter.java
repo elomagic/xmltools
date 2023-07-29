@@ -32,6 +32,9 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Tooling class to convert a key value map to a XML document.
+ */
 public class KeyValue2XmlConverter {
 
     private String keyDelimiter = ".";

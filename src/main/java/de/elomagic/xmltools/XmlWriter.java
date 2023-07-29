@@ -32,6 +32,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+/**
+ * Tooling class for writing XML bind objects.
+ */
 public class XmlWriter {
 
     /**

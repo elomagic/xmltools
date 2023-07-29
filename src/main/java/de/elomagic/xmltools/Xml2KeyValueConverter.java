@@ -34,6 +34,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Tooling class to convert a XML document to a key value map.
+ */
 public class Xml2KeyValueConverter {
 
     private String keyDelimiter = ".";

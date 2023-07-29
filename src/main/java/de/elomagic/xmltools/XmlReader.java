@@ -32,6 +32,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Tooling class for reading XML bind objects.
+ */
 public class XmlReader {
 
     private XmlReader() {
