@@ -139,9 +139,9 @@ public class Xml2KeyValueConverter {
      * @throws SAXException Thrown when unable to parse the XML document
      */
     @NotNull
-    public Map<String, String> read(@NotNull Path file) throws ParserConfigurationException, IOException, SAXException {
+    public Map<String, String> convert(@NotNull Path file) throws ParserConfigurationException, IOException, SAXException {
 
-        return read(Files.newInputStream(file));
+        return convert(Files.newInputStream(file));
 
     }
 
@@ -155,7 +155,7 @@ public class Xml2KeyValueConverter {
      * @throws SAXException Thrown when unable to parse the XML document
      */
     @NotNull
-    public Map<String, String> read(@NotNull InputStream in) throws ParserConfigurationException, IOException, SAXException {
+    public Map<String, String> convert(@NotNull InputStream in) throws ParserConfigurationException, IOException, SAXException {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         //an instance of builder to parse the specified xml file
