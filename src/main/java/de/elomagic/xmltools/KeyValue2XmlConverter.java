@@ -43,8 +43,9 @@ public class KeyValue2XmlConverter {
      * <p>
      * Default "."
      *
-     * @return key item delimiter
+     * @return key item delimiter but never null
      */
+    @NotNull
     public String getKeyDelimiter() {
         return keyDelimiter;
     }
@@ -58,10 +59,22 @@ public class KeyValue2XmlConverter {
         this.keyDelimiter = keyDelimiter;
     }
 
+    /**
+     * Returns a regular expression {@link Pattern} to separate key item into name, repetition and attribute.
+     * <p>
+     * Default "^(?<name>[^#\\[\\]]+)(\\[(?<index>\\d+)])?(#(?<attr>.+))?$"
+     *
+     * @return The key pattern but never null.
+     */
+    @NotNull
     public Pattern getKeyPattern() {
         return keyPattern;
     }
 
+    /**
+     * Set regular expression {@link Pattern} to separate key item into name, repetition and attribute.
+     * @param keyPattern The key pattern but never null.
+     */
     public void setKeyPattern(@NotNull Pattern keyPattern) {
         this.keyPattern = keyPattern;
     }
