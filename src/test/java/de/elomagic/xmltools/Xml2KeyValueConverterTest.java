@@ -17,7 +17,8 @@ class Xml2KeyValueConverterTest {
 
         //result.forEach((key, value) -> System.out.println(key + "=" + value));
 
-        result.keySet().stream().sorted().forEach(k -> System.out.println(k + "=" + result.get(k)));
+        //result.keySet().stream().sorted().forEach(k -> System.out.println(k + "=" + result.get(k)));
+        result.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> System.out.println(e.getKey() + " = " + e.getValue()));
 
         assertEquals(26, result.size());
         assertEquals("1", result.get("root.child1[1].subelement[1]"));
