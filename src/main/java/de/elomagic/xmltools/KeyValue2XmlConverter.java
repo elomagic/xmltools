@@ -57,9 +57,11 @@ public class KeyValue2XmlConverter {
      * Set the delimiter string, which will divide key into key items.
      *
      * @param keyDelimiter key item delimiter
+     * @return This instance
      */
-    public void setKeyDelimiter(@NotNull String keyDelimiter) {
+    public KeyValue2XmlConverter setKeyDelimiter(@NotNull String keyDelimiter) {
         this.keyDelimiter = keyDelimiter;
+        return this;
     }
 
     /**
@@ -76,18 +78,28 @@ public class KeyValue2XmlConverter {
 
     /**
      * Set regular expression {@link Pattern} to separate key item into name, repetition and attribute.
+     *
      * @param keyPattern The key pattern but never null.
+     * @return This instance
      */
-    public void setKeyPattern(@NotNull Pattern keyPattern) {
+    public KeyValue2XmlConverter setKeyPattern(@NotNull Pattern keyPattern) {
         this.keyPattern = keyPattern;
+        return this;
     }
 
     public int getRepetitionStart() {
         return repetitionStart;
     }
 
-    public void setRepetitionStart(int repetitionStart) {
+    /**
+     * Set value, where repetition index will start.
+     *
+     * @param repetitionStart Start from index
+     * @return This instance
+     */
+    public KeyValue2XmlConverter setRepetitionStart(int repetitionStart) {
         this.repetitionStart = repetitionStart;
+        return this;
     }
 
     /**

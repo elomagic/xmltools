@@ -65,9 +65,11 @@ public class Xml2KeyValueConverter {
      * Default "." (Dot)
      *
      * @param keyDelimiter A string
+     * @return This instance
      */
-    public void setKeyDelimiter(@NotNull String keyDelimiter) {
+    public Xml2KeyValueConverter setKeyDelimiter(@NotNull String keyDelimiter) {
         this.keyDelimiter = keyDelimiter;
+        return this;
     }
 
     /**
@@ -87,9 +89,11 @@ public class Xml2KeyValueConverter {
      * Default true;
      *
      * @param attributeSupport When true, XML attributes will also be converted otherwise not
+     * @return This instance
      */
-    public void setAttributeSupport(boolean attributeSupport) {
+    public Xml2KeyValueConverter setAttributeSupport(boolean attributeSupport) {
         this.attributeSupport = attributeSupport;
+        return this;
     }
 
 
@@ -112,24 +116,27 @@ public class Xml2KeyValueConverter {
      *
      * @param attributeDelimiter A string
      */
-    public void setAttributeDelimiter(@NotNull String attributeDelimiter) {
+    public Xml2KeyValueConverter setAttributeDelimiter(@NotNull String attributeDelimiter) {
         this.attributeDelimiter = attributeDelimiter;
+        return this;
     }
 
     public int getRepetitionStart() {
         return repetitionStart;
     }
 
-    public void setRepetitionStart(int repetitionStart) {
+    public Xml2KeyValueConverter setRepetitionStart(int repetitionStart) {
         this.repetitionStart = repetitionStart;
+        return this;
     }
 
     public String getRepetitionPattern() {
         return repetitionPattern;
     }
 
-    public void setRepetitionPattern(@NotNull String repetitionPattern) {
+    public Xml2KeyValueConverter setRepetitionPattern(@NotNull String repetitionPattern) {
         this.repetitionPattern = repetitionPattern;
+        return this;
     }
 
     /**
