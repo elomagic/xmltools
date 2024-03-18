@@ -89,7 +89,7 @@
         <!-- Dependencies versions -->
         <jakarta.xml.bind-api.version>4.0.0</jakarta.xml.bind-api.version>
         <jaxb-impl.version>4.0.3</jaxb-impl.version>
-        <jetbrains.annotations.version>24.0.1</jetbrains.annotations.version>
+        <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
 
         <!-- Test dependencies version< -->
         <junit.version>5.9.2</junit.version>
