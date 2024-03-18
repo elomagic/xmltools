@@ -83,7 +83,7 @@
 
         <dependency-check-maven.version>8.3.1</dependency-check-maven.version>
         <github-release-plugin>1.4.0</github-release-plugin>
-        <license-maven-plugin.version>4.2</license-maven-plugin.version>
+        <license-maven-plugin.version>4.3</license-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
 
         <!-- Dependencies versions -->
