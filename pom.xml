@@ -69,6 +69,7 @@
         <jaxb.api.version>2.3.1</jaxb.api.version>
 
         <!-- Plugin versions -->
+        <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -262,7 +263,7 @@
                     <includeLicenseText>false</includeLicenseText>
                     <outputReactorProjects>true</outputReactorProjects>
                     <outputFormat>all</outputFormat>
-                    <outputName>${project.artifactId}-sbom</outputName>
+                    <outputName>${project.artifactId}-${project.version}-sbom</outputName>
                 </configuration>
             </plugin>
                                                
@@ -300,8 +301,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <files>${project.basedir}/target/${project.artifactId}-${project.version}-sbom.json},${project.basedir}/target/${project.artifactId}-${project.version}-sbom.xml}</files>
+                    <!--<repositoryId>github</repositoryId>-->
+                </configuration>
             </plugin>
-
         </plugins>
         
         <resources>
@@ -423,10 +435,6 @@
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
-                    </plugin>
-
-                    <plugin>
-
                     </plugin>
                 </plugins>
             </build>           
