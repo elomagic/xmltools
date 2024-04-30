@@ -350,7 +350,7 @@
         <snapshotRepository>
             <id>github</id>
             <name>GitHub elomagic Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/elomagic/xmltoolsl</url>
+            <url>https://maven.pkg.github.com/elomagic/xmltools</url>
         </snapshotRepository>
     </distributionManagement>
     
@@ -423,6 +423,10 @@
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
+                    </plugin>
+
+                    <plugin>
+
                     </plugin>
                 </plugins>
             </build>           
