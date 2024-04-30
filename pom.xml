@@ -309,7 +309,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <description>Description of your release</description>
                     <releaseName>${project.version}</releaseName>
                     <tag>V${project.version}</tag>
                     <draft>true</draft>
