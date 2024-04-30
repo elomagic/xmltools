@@ -82,7 +82,7 @@
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 
         <cyclonedx-maven-plugin.version>2.8.0</cyclonedx-maven-plugin.version>
-        <dependency-check-maven.version>8.4.3</dependency-check-maven.version>
+        <dependency-check-maven.version>9.1.0</dependency-check-maven.version>
         <github-release-plugin>1.4.0</github-release-plugin>
         <license-maven-plugin.version>4.3</license-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
