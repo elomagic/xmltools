@@ -3,6 +3,7 @@ package de.elomagic.xmltools;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +14,7 @@ class Xml2KeyValueConverterTest {
 
         Xml2KeyValueConverter converter = new Xml2KeyValueConverter();
 
-        Map<String, String> result = converter.convert(getClass().getResourceAsStream("/sample01.xml"));
+        Map<String, String> result = converter.convert(Objects.requireNonNull(getClass().getResourceAsStream("/sample01.xml")));
 
         //result.forEach((key, value) -> System.out.println(key + "=" + value));
 
@@ -26,7 +27,7 @@ class Xml2KeyValueConverterTest {
         assertEquals("false", result.get("root.child5.active"));
 
         converter.setAttributeSupport(false);
-        Map<String, String> result2 = converter.convert(getClass().getResourceAsStream("/sample01.xml"));
+        Map<String, String> result2 = converter.convert(Objects.requireNonNull(getClass().getResourceAsStream("/sample01.xml")));
         assertEquals(23, result2.size());
         assertFalse(result.containsKey("abc"));
     }

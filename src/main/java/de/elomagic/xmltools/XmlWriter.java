@@ -37,6 +37,10 @@ import java.nio.file.StandardOpenOption;
  */
 public class XmlWriter {
 
+    private XmlWriter() {
+
+    }
+
     /**
      * Write a Simple XML annotated object to an output stream with UTF-8.
      * <p>
