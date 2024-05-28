@@ -85,7 +85,7 @@
         <dependency-check-maven.version>9.2.0</dependency-check-maven.version>
         <github-release-plugin>1.6.0</github-release-plugin>
         <license-maven-plugin.version>4.5</license-maven-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.14</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
 
         <!-- Dependencies versions -->
         <jakarta.xml.bind-api.version>4.0.2</jakarta.xml.bind-api.version>
