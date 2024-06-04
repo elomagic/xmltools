@@ -110,7 +110,12 @@ Versioning follows the semantic of [Semantic Versioning 2.0.0](https://semver.or
 
 #### Releasing new version / hotfix
 
-Execute relevant GitHub actions
+Execute following steps:
+
+* Are the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md) up to date?
+* Check the version in the ```pom.xml``` and [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
+* Set release date in the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
+* Execute GitHub action "release"
   
 ## Who do I talk to? ###
 
