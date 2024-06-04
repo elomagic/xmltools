@@ -69,13 +69,12 @@
         <jaxb.api.version>2.3.1</jaxb.api.version>
 
         <!-- Plugin versions -->
-        <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+        <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
         <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
         <maven-install-plugin.version>3.1.2</maven-install-plugin.version>
         <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
@@ -83,10 +82,10 @@
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 
         <cyclonedx-maven-plugin.version>2.8.0</cyclonedx-maven-plugin.version>
-        <dependency-check-maven.version>9.1.0</dependency-check-maven.version>
+        <dependency-check-maven.version>9.2.0</dependency-check-maven.version>
         <github-release-plugin>1.6.0</github-release-plugin>
-        <license-maven-plugin.version>4.3</license-maven-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <license-maven-plugin.version>4.5</license-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
 
         <!-- Dependencies versions -->
         <jakarta.xml.bind-api.version>4.0.2</jakarta.xml.bind-api.version>
@@ -252,7 +251,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <skipNotDeployed>false</skipNotDeployed>
                     <projectType>library</projectType>
                     <schemaVersion>1.4</schemaVersion>
                     <includeBomSerialNumber>true</includeBomSerialNumber>
@@ -299,39 +297,9 @@
             </plugin>
 
             <plugin>
-                <groupId>de.jutzig</groupId>
-                <artifactId>github-release-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>release</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <releaseName>${project.version}</releaseName>
-                    <tag>V${project.version}</tag>
-                    <draft>true</draft>
-                    <overwriteArtifact>true</overwriteArtifact>
-                    <fileSets>
-                        <fileSet>
-                            <directory>${project.build.directory}</directory>
-                            <includes>
-                                <include>${project.artifactId}-${project.version}-sbom.*</include>
-                            </includes>
-                        </fileSet>
-                    </fileSets>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
         </plugins>
         
@@ -381,7 +349,7 @@
         <snapshotRepository>
             <id>github</id>
             <name>GitHub elomagic Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/elomagic/xmltools</url>
+            <url>https://maven.pkg.github.com/elomagic/xmltoolsl</url>
         </snapshotRepository>
     </distributionManagement>
     
