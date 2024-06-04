@@ -94,6 +94,8 @@ What you need is an installed JDK at least version 17 and [Apache Maven](https:/
 Then clone this project to your local file system and execute `mvn clean install` in the project folder. After successful finish you find 
 the artefact in the `target` folder.
 
+Note, latest SNAPSHOTs can also be found under "releases" in the GitHub project page.
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
@@ -106,26 +108,7 @@ Versioning follows the semantic of [Semantic Versioning 2.0.0](https://semver.or
 
 #### Releasing new version / hotfix
 
-Execute following steps:
-
-* Are the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md) up to date?
-* Check the version in the ```pom.xml``` and [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
-* Set release date in the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
-* Credentials (Nexus, GitHub) up to date?
-* Execute Maven release process
-  ```bash
-  mvn clean install release:prepare -P release
-  mvn release:perform -P release
-  ```
-
-#### Releasing snapshot package on GitHub 
-
-Execute Maven deploy process
-
-```bash
-mvn clean install deploy
-```
-
+Execute relevant GitHub actions
   
 ## Who do I talk to? ###
 
