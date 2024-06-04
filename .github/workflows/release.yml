@@ -62,5 +62,5 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            target/action*.*
+            target/xml*.*
             
