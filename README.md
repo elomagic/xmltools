@@ -2,6 +2,8 @@
 
 ---
 
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/apache/maven.svg?label=License)][license]
+[![Maven Central](https://img.shields.io/maven-central/v/de.elomagic/xmltools.svg?label=Maven%20Central)](https://mvnrepository.com/artifact/de.elomagic/xmltools)
 [![build workflow](https://github.com/elomagic/xmltools/actions/workflows/maven.yml/badge.svg)](https://github.com/elomagic/xmltools/actions)
 [![GitHub issues](https://img.shields.io/github/issues-raw/elomagic/xmltools)](https://github.com/elomagic/xmltools/issues)
 [![GitHub tag](https://img.shields.io/github/tag/elomagic/xmltools.svg)](https://GitHub.com/elomagic/xmltools/tags/)
@@ -94,6 +96,8 @@ What you need is an installed JDK at least version 17 and [Apache Maven](https:/
 Then clone this project to your local file system and execute `mvn clean install` in the project folder. After successful finish you find 
 the artefact in the `target` folder.
 
+Note, latest SNAPSHOTs can also be found under "releases" in the GitHub project page.
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
@@ -111,21 +115,7 @@ Execute following steps:
 * Are the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md) up to date?
 * Check the version in the ```pom.xml``` and [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
 * Set release date in the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
-* Credentials (Nexus, GitHub) up to date?
-* Execute Maven release process
-  ```bash
-  mvn clean install release:prepare -P release
-  mvn release:perform -P release
-  ```
-
-#### Releasing snapshot package on GitHub 
-
-Execute Maven deploy process
-
-```bash
-mvn clean install deploy
-```
-
+* Execute GitHub action "release"
   
 ## Who do I talk to? ###
 
@@ -133,4 +123,6 @@ mvn clean install deploy
 
 ## License
 
-The xmltools is distributed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+The xmltools is distributed under [Apache License, Version 2.0][license]
+
+[license]: https://www.apache.org/licenses/LICENSE-2.0
