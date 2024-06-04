@@ -2,6 +2,8 @@
 
 ---
 
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/apache/maven.svg?label=License)][license]
+[![Maven Central](https://img.shields.io/maven-central/v/de.elomagic/xmltools.svg?label=Maven%20Central)](https://https://mvnrepository.com/artifact/de.elomagic/xmltools)
 [![build workflow](https://github.com/elomagic/xmltools/actions/workflows/maven.yml/badge.svg)](https://github.com/elomagic/xmltools/actions)
 [![GitHub issues](https://img.shields.io/github/issues-raw/elomagic/xmltools)](https://github.com/elomagic/xmltools/issues)
 [![GitHub tag](https://img.shields.io/github/tag/elomagic/xmltools.svg)](https://GitHub.com/elomagic/xmltools/tags/)
@@ -116,4 +118,6 @@ Execute relevant GitHub actions
 
 ## License
 
-The xmltools is distributed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+The xmltools is distributed under [Apache License, Version 2.0][license]
+
+[license]: https://www.apache.org/licenses/LICENSE-2.0
