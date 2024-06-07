@@ -169,32 +169,36 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>${license-maven-plugin.version}</version>
                 <configuration>
-                    <header>license-apache2.txt</header>
                     <failIfMissing>true</failIfMissing>
                     <strictCheck>true</strictCheck>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <properties>
-                        <license.owner>${license.owner}</license.owner>
-                        <license.title>${license.title}</license.title>
-                        <license.years>${license.years}</license.years>
-                        <license.mailto>${license.mailto}</license.mailto>
-                    </properties>
                     <mapping>
                         <java>SLASHSTAR_STYLE</java>
                         <js>SLASHSTAR_STYLE</js>
                         <css>SLASHSTAR_STYLE</css>
                         <less>SLASHSTAR_STYLE</less>
                     </mapping>
-                    <includes>
-                        <include>src/*/java/de/**/*.java</include>
-                        <include>src/*/js/de/**/*.js</include>
-                        <include>src/*/css/de/**/*.css</include>
-                        <include>src/*/less/de/**/*.less</include>
-                    </includes>
-                    <excludes>
-                        <exclude>src/*/java/de/**/package-info.java</exclude>
-                        <exclude>src/test/**</exclude>
-                    </excludes>
+                    <licenseSets>
+                        <licenseSet>
+                            <header>license-apache2.txt</header>
+                            <properties>
+                                <license.owner>${license.owner}</license.owner>
+                                <license.title>${license.title}</license.title>
+                                <license.years>${license.years}</license.years>
+                                <license.mailto>${license.mailto}</license.mailto>
+                            </properties>
+                            <includes>
+                                <include>src/*/java/de/**/*.java</include>
+                                <include>src/*/js/de/**/*.js</include>
+                                <include>src/*/css/de/**/*.css</include>
+                                <include>src/*/less/de/**/*.less</include>
+                            </includes>
+                            <excludes>
+                                <exclude>src/*/java/de/**/package-info.java</exclude>
+                                <exclude>src/test/**</exclude>
+                            </excludes>
+                        </licenseSet>
+                    </licenseSets>
                 </configuration>
                 <executions>
                     <execution>
