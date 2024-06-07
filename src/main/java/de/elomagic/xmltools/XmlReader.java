@@ -42,10 +42,11 @@ public class XmlReader {
 
     /**
      * Read a Simple XML annotated object from an input stream.
-     * <p>
+     *
      * @param in InputStream
      * @param clazz Class type of XML Object
-     * @return Object
+     * @return Returns new instance of given class "clazz" parameter
+     * @param <T> tbd
      * @throws JAXBException Thrown when unable to read XML into object
      */
     @NotNull
@@ -56,10 +57,11 @@ public class XmlReader {
 
     /**
      * Read a Simple XML annotated object from a reader.
-     * <p>
+     *
      * @param reader Reader
      * @param clazz Class type of XML Object
-     * @return Object
+     * @return Returns new instance of given class "clazz" parameter
+     * @param <T> tbd
      * @throws JAXBException Thrown when unable to read XML into object
      */
     @NotNull
@@ -72,10 +74,11 @@ public class XmlReader {
 
     /**
      * Read a Simple XML annotated object from a string.
-     * <p>
+     *
      * @param s String
      * @param clazz Class type of XML Object
-     * @return T
+     * @return Returns new instance of given class "clazz" parameter
+     * @param <T> tbd
      * @throws JAXBException Thrown when unable to read XML string into object
      */
     @NotNull
@@ -85,10 +88,11 @@ public class XmlReader {
 
     /**
      * Read a JAXB annotated object from file.
-     * <p>
+     *
      * @param file File
      * @param clazz Class type of object to be read
-     * @return T
+     * @return Returns new instance of given class "clazz" parameter
+     * @param <T> tbd
      * @throws JAXBException Thrown when unable to read XML file into object
      * @throws IOException Thrown when unable to read XML from ile
      */

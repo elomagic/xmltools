@@ -115,25 +115,48 @@ public class Xml2KeyValueConverter {
      * Default "#" (Hashtag)
      *
      * @param attributeDelimiter A string
+     * @return Return this instance
      */
     public Xml2KeyValueConverter setAttributeDelimiter(@NotNull String attributeDelimiter) {
         this.attributeDelimiter = attributeDelimiter;
         return this;
     }
 
+    /**
+     * Returns the index where the repetition will start. Default 1
+     *
+     * @return Returns the repetition start index
+     */
     public int getRepetitionStart() {
         return repetitionStart;
     }
 
+    /**
+     * Set the index where the repetition will start. Default 1
+     *
+     * @param repetitionStart The repetition start index
+     * @return Returns this instance
+     */
     public Xml2KeyValueConverter setRepetitionStart(int repetitionStart) {
         this.repetitionStart = repetitionStart;
         return this;
     }
 
+    /**
+     * Returns the repetition pattern.
+     *
+     * @return Returns the pattern.
+     */
     public String getRepetitionPattern() {
         return repetitionPattern;
     }
 
+    /**
+     * Set the repetition pattern.
+     *
+     * @param repetitionPattern The Pattern
+     * @return Returns this instance
+     */
     public Xml2KeyValueConverter setRepetitionPattern(@NotNull String repetitionPattern) {
         this.repetitionPattern = repetitionPattern;
         return this;
