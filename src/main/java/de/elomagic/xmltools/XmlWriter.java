@@ -43,10 +43,10 @@ public class XmlWriter {
 
     /**
      * Write a Simple XML annotated object to an output stream with UTF-8.
-     * <p>
+     *
      * @param out Output stream
      * @param o Simple XML Annotated object
-     * @throws JAXBException
+     * @throws JAXBException Thrown when unable to serialize the object into an XML document
      */
     public static void write(@NotNull final OutputStream out, @NotNull final Object o) throws JAXBException {
         OutputStreamWriter osw = new OutputStreamWriter(out, StandardCharsets.UTF_8);
@@ -55,10 +55,10 @@ public class XmlWriter {
 
     /**
      * Write a Simple XML annotated object to an writer stream.
-     * <p>
+     *
      * @param writer Writer stream
      * @param o Simple XML Annotated object
-     * @throws JAXBException
+     * @throws JAXBException Thrown when unable to serialize the object into an XML document
      */
     public static void write(@NotNull final Writer writer, @NotNull final Object o) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(o.getClass());
@@ -70,11 +70,11 @@ public class XmlWriter {
 
     /**
      * Write a Simple XML annotated object to local file.
-     * <p>
+     *
      * @param output File
      * @param o Simple XML Annotated object
-     * @throws IOException
-     * @throws JAXBException
+     * @throws IOException Thrown when unable to write into the file
+     * @throws JAXBException Thrown when unable to serialize the object into an XML document
      */
     public static void write(@NotNull final Path output, @NotNull final Object o) throws IOException, JAXBException {
         try (Writer writer = Files.newBufferedWriter(output, StandardOpenOption.WRITE)) {

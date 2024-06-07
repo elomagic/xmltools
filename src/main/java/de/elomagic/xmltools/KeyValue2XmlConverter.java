@@ -67,7 +67,7 @@ public class KeyValue2XmlConverter {
     /**
      * Returns a regular expression {@link Pattern} to separate key item into name, repetition and attribute.
      * <p>
-     * Default "^(?<name>[^#\\[\\]]+)(\\[(?<index>\\d+)])?(#(?<attr>.+))?$"
+     * Default <pre>^(?&lt;name&gt;[^#\\[\\]]+)(\\[(?&lt;index&gt;\\d+)])?(#(?&lt;attr&gt;.+))?$</pre>
      *
      * @return The key pattern but never null.
      */
@@ -87,6 +87,11 @@ public class KeyValue2XmlConverter {
         return this;
     }
 
+    /**
+     * Returns the index where repetition will start.
+     *
+     * @return The index
+     */
     public int getRepetitionStart() {
         return repetitionStart;
     }
