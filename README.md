@@ -116,10 +116,6 @@ Execute following steps:
 * Check the version in the ```pom.xml``` and [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
 * Set release date in the [CHANGELOG.md](https://github.com/elomagic/xmltools/blob/main/CHANGELOG.md)
 * Execute GitHub action "release"
-  
-## Who do I talk to? ###
-
-* Repo owner or admin
 
 ## License
 
