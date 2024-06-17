@@ -228,8 +228,6 @@
                 <version>${maven-surefire-plugin.version}</version>
             </plugin>
             
-            <!-- http://jeremylong.github.io/DependencyCheck/index.html -->
-            <!-- Because of performance issues, this plugin is disabled but external covered by renovate
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -242,7 +240,6 @@
                     </execution>
                 </executions>
             </plugin>
-            -->
 
             <plugin>
                 <groupId>org.cyclonedx</groupId>

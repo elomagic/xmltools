@@ -25,10 +25,21 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
-          server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: OSSRH_USERNAME # env variable for username in deploy
-          server-password: OSSRH_CENTRAL_TOKEN # env variable for token in deploy
+          cache: 'maven'
+
+      - name: Setup Maven server settings
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{
+              "id": "nvd",
+              "username": "john.doe",
+              "password": "${{ secrets.NVD_KEY }}"
+            }, {
+              "id": "ossrh",
+              "username": "${{ secrets.OSSRH_USERNAME }}",
+              "password": "${{ secrets.OSSRH_CENTRAL_TOKEN }}"
+            }]  
 
       - name: Extract releasing version from POM
         id: extract_version
