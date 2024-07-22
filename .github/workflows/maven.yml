@@ -46,7 +46,7 @@ jobs:
 
       - name: Upload SNAPSHOTs
         if: steps.branch-names.outputs.current_branch == 'main'
-        uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87 # v2
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
         with:
           name: v${{ env.VERSION }}
           tag_name: v${{ env.VERSION }}
