@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Get branch names.
         id: branch-names
-        uses: tj-actions/branch-names@6871f53176ad61624f978536bbf089c574dc19a2 # v8
+        uses: tj-actions/branch-names@f44339b51f74753b57583fbbd124e18a81170ab1 # v8
 
       - name: Checkout project
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
