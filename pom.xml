@@ -94,7 +94,7 @@
         <jetbrains.annotations.version>26.0.2-1</jetbrains.annotations.version>
 
         <!-- Test dependencies version< -->
-        <junit.version>5.14.1</junit.version>
+        <junit.version>5.14.2</junit.version>
     </properties>
     
     <scm>                
